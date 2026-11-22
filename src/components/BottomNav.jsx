@@ -3,7 +3,7 @@ import { Layers, Terminal, Globe, User } from 'lucide-react';
 
 export function BottomNav({ activeTab, setActiveTab, onTabClick }) {
   const tabs = [
-    { id: 'services', label: 'Services', icon: Layers, badge: '₹499 Deal' },
+    { id: 'services', label: 'Services', icon: Layers, badge: '🔥 ₹19 Deal' },
     { id: 'tools', label: 'Utilities', icon: Terminal, badge: null },
     { id: 'projects', label: 'Showcase', icon: Globe, badge: null },
     { id: 'profile', label: 'Contact', icon: User, badge: null },
@@ -29,7 +29,7 @@ export function BottomNav({ activeTab, setActiveTab, onTabClick }) {
               }`}
             >
               {tab.badge && !isActive && (
-                <span className="absolute -top-1.5 right-1.5 px-1.5 py-0.2 text-[8px] font-black uppercase bg-blue-600 text-white rounded-full leading-none shadow-xs animate-pulse">
+                <span className="absolute -top-1.5 right-1 px-1.5 py-0.2 text-[8px] font-black uppercase bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-full leading-none shadow-xs animate-pulse">
                   {tab.badge}
                 </span>
               )}

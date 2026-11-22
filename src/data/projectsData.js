@@ -1,5 +1,25 @@
 export const PROJECTS = [
   {
+    id: 'portfolio-19',
+    title: 'Student & Dev Portfolio',
+    category: 'Instant Deal',
+    badge: '92% OFF 🔥',
+    description: 'Personal dark-mode portfolio for developers and students with interactive CLI mode, GitHub showcase, and zero recurring hosting fees.',
+    price: '₹19',
+    originalPrice: '₹249',
+    discount: '92% OFF',
+    savings: 'Save ₹230',
+    timeline: '24 Hours Delivery',
+    features: [
+      'Interactive Developer CLI / Terminal mode',
+      'GitHub repositories & project showcases',
+      'Free personal subdomain (yourname.tools4genz.com)',
+      'Live within 24 hours of submitting details',
+      'Zero recurring hosting or server bills',
+    ],
+    isDeal: true,
+  },
+  {
     id: 'custom-web-499',
     title: 'Custom Website Package',
     category: 'Full Website',
@@ -15,22 +35,6 @@ export const PROJECTS = [
       'Custom domain or free .tools4genz.com',
     ],
     isCustomDeal: true,
-  },
-  {
-    id: 'portfolio-19',
-    title: 'Student & Dev Portfolio',
-    category: 'Instant Deal',
-    badge: '₹19 Deal',
-    description: 'Clean dark-mode portfolio for developers, students, and freelancers to showcase projects and GitHub repositories.',
-    price: '₹19',
-    timeline: '24 Hours',
-    features: [
-      'CLI / Terminal interactive mode',
-      'GitHub showcase & live project links',
-      'Personal subdomain (.tools4genz.com)',
-      'Zero recurring hosting fees',
-    ],
-    isDeal: true,
   },
   {
     id: 'audit-ai',
@@ -103,50 +107,5 @@ export const CLIENT_PORTFOLIOS = [
     role: 'Product Designer',
     domain: 'urvashi.tools4genz.com',
     tags: ['Visual Grid', 'Client Case Studies', 'Minimal'],
-  },
-];
-
-export const SERVICE_PACKAGES = [
-  {
-    id: 'custom-web-package',
-    title: 'Full Custom Website',
-    price: '₹499',
-    timeline: '48 - 72 Hours',
-    description: 'Handcrafted website built for your business, service, or personal brand. Includes free deployment and full SEO configuration.',
-    highlights: [
-      'Tailored modern design (no generic cookie-cutter templates)',
-      'Free Cloudflare global hosting deployment included',
-      'Complete Technical SEO setup (sitemap, meta, Open Graph)',
-      'Mobile responsive & fast loading speed',
-      'Free subdomain (yourname.tools4genz.com) or your own .com domain',
-    ],
-    recommended: true,
-  },
-  {
-    id: 'portfolio-19-package',
-    title: 'Instant Portfolio Website',
-    price: '₹19',
-    timeline: '24 Hours',
-    description: 'High-speed dark-mode portfolio for developers, students, and freelancers with CLI terminal mode.',
-    highlights: [
-      'Showcase projects, GitHub, and contact links',
-      'Interactive CLI / Terminal mode for developer flair',
-      'Deployed on yourname.tools4genz.com',
-      'Delivered within 24 hours of receiving details',
-    ],
-    recommended: false,
-  },
-  {
-    id: 'webapp-saas',
-    title: 'Full-Stack Web App / Mini App',
-    price: 'Custom Quote',
-    timeline: '5 - 10 Days',
-    description: 'Custom SaaS dashboards, Telegram Mini Apps, billing systems, or database-backed web applications.',
-    highlights: [
-      'Frontend + Backend + Database architecture',
-      'Authentication, API integrations & Payment gateways',
-      'Telegram Bot & Mini App integration',
-    ],
-    recommended: false,
   },
 ];

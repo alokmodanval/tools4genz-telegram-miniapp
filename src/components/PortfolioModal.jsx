@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Check, Copy, Send, ArrowRight, ShieldCheck } from 'lucide-react';
+import { X, Check, Copy, Send, ArrowRight, Flame, Sparkles } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 
 export function PortfolioModal({ isOpen, onClose, user, onHaptic, showAlert }) {
@@ -7,8 +7,8 @@ export function PortfolioModal({ isOpen, onClose, user, onHaptic, showAlert }) {
   const [formData, setFormData] = useState({
     name: user?.first_name || '',
     role: 'Full-Stack Developer',
-    bio: 'Passionate developer building fast web apps and developer tools.',
-    skills: 'React, Node.js, Tailwind, Git',
+    bio: 'Passionate developer building clean web apps and developer tools.',
+    skills: 'React, Node.js, Tailwind, Git, Python',
     github: '',
     telegram: user?.username ? `@${user.username}` : '',
     theme: 'modern-blue',
@@ -44,7 +44,7 @@ export function PortfolioModal({ isOpen, onClose, user, onHaptic, showAlert }) {
   const handleCompleteOrder = () => {
     onHaptic('success');
 
-    const orderText = `🚀 *PORTFOLIO ORDER (₹19 DEAL)* 🚀
+    const orderText = `🚀 *PORTFOLIO ORDER (₹19 FLASH DEAL - 92% OFF)* 🚀
 ━━━━━━━━━━━━━━━━━━━━
 👤 *Name:* ${formData.name}
 💼 *Role:* ${formData.role}
@@ -54,7 +54,7 @@ export function PortfolioModal({ isOpen, onClose, user, onHaptic, showAlert }) {
 📝 *Bio:* ${formData.bio}
 💻 *GitHub:* ${formData.github || 'N/A'}
 📱 *Telegram:* ${formData.telegram || `@${user?.username || 'User'}`}
-💰 *Amount:* ₹19 (UPI)
+💰 *Amount Paid:* ₹19 (Original ₹249 - Save ₹230)
 ━━━━━━━━━━━━━━━━━━━━
 Sent from Tools4Genz Mini App`;
 
@@ -70,7 +70,7 @@ Sent from Tools4Genz Mini App`;
   const themes = [
     { id: 'modern-blue', name: 'Sapphire Pro' },
     { id: 'obsidian', name: 'Obsidian Dark' },
-    { id: 'slate', name: 'Clean Minimal' },
+    { id: 'terminal', name: 'Terminal CLI' },
   ];
 
   const upiPayUrl = `upi://pay?pa=${upiId}&pn=Tools4Genz&am=19&cu=INR&tn=Portfolio19_${encodeURIComponent(formData.name || 'User')}`;
@@ -78,13 +78,23 @@ Sent from Tools4Genz Mini App`;
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-md transition-all">
       <div className="relative w-full max-w-lg max-h-[92vh] flex flex-col bg-white border border-blue-100 rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 bg-slate-50/50">
-          <div>
-            <h3 className="text-sm font-bold text-slate-900">Instant Portfolio Setup</h3>
-            <p className="text-[11px] text-slate-500">
-              {step === 1 ? 'Step 1: Apni details enter karein' : 'Step 2: Preview & UPI Payment'}
-            </p>
+        {/* Header with 249 cut to 19 Banner */}
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-100 bg-gradient-to-r from-blue-50/70 via-indigo-50/50 to-white">
+          <div className="flex items-center space-x-2.5">
+            <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs">
+              <Flame className="w-4 h-4 fill-white" />
+            </div>
+            <div>
+              <div className="flex items-center space-x-1.5">
+                <h3 className="text-sm font-bold text-slate-900">Instant Portfolio Deal</h3>
+                <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-rose-50 text-rose-600 border border-rose-200">
+                  <span className="line-through">₹249</span> ₹19
+                </span>
+              </div>
+              <p className="text-[11px] text-blue-700 font-medium">
+                {step === 1 ? 'Step 1: Enter details' : 'Step 2: Preview & Pay ₹19'}
+              </p>
+            </div>
           </div>
           <button
             onClick={() => {
@@ -101,6 +111,18 @@ Sent from Tools4Genz Mini App`;
         <div className="p-5 overflow-y-auto space-y-3.5 flex-1 text-slate-700">
           {step === 1 ? (
             <form onSubmit={handleNext} className="space-y-3">
+              {/* Highlight pill inside form */}
+              <div className="p-3 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 flex items-center justify-between">
+                <div>
+                  <span className="text-xs font-bold text-blue-900">Flash Price: ₹19 Only</span>
+                  <p className="text-[10px] text-blue-700">CLI Mode + GitHub Showcase + Free Subdomain</p>
+                </div>
+                <div className="text-right">
+                  <span className="text-xs text-rose-500 line-through font-bold">₹249</span>
+                  <div className="text-[10px] font-bold text-emerald-600">Save ₹230</div>
+                </div>
+              </div>
+
               <div>
                 <label className="block text-[11px] font-semibold text-slate-700 mb-1">
                   Pura Naam *
@@ -140,7 +162,7 @@ Sent from Tools4Genz Mini App`;
                   name="skills"
                   value={formData.skills}
                   onChange={handleChange}
-                  placeholder="React, TypeScript, Python, Tailwind"
+                  placeholder="React, TypeScript, Python, Tailwind, Git"
                   className="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 text-xs focus:bg-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all"
                 />
               </div>
@@ -161,7 +183,7 @@ Sent from Tools4Genz Mini App`;
 
               <div>
                 <label className="block text-[11px] font-semibold text-slate-700 mb-1.5">
-                  Design Theme
+                  Portfolio Style
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   {themes.map((t) => (
@@ -200,7 +222,7 @@ Sent from Tools4Genz Mini App`;
                 </div>
                 <div>
                   <label className="block text-[11px] font-semibold text-slate-700 mb-1">
-                    Subdomain
+                    Free Subdomain
                   </label>
                   <input
                     type="text"
@@ -217,13 +239,13 @@ Sent from Tools4Genz Mini App`;
                 type="submit"
                 className="w-full py-3 mt-1 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs shadow-lg shadow-blue-500/20 flex items-center justify-center space-x-1.5 active:scale-98 transition-all"
               >
-                <span>Continue to Preview & Payment (₹19)</span>
+                <span>Preview & Pay (~~₹249~~ ₹19)</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </form>
           ) : (
             <div className="space-y-4">
-              {/* Preview Box */}
+              {/* Live Preview Box */}
               <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-50/80 to-indigo-50/50 border border-blue-200/80 space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2.5">
@@ -249,7 +271,23 @@ Sent from Tools4Genz Mini App`;
                 </div>
               </div>
 
-              {/* UPI Payment */}
+              {/* Price Breakdown Card */}
+              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5 text-xs">
+                <div className="flex justify-between text-slate-500">
+                  <span>Regular Price:</span>
+                  <span className="line-through">₹249</span>
+                </div>
+                <div className="flex justify-between text-emerald-600 font-semibold">
+                  <span>Flash Discount (92% OFF):</span>
+                  <span>- ₹230</span>
+                </div>
+                <div className="flex justify-between text-slate-900 font-bold border-t border-slate-200 pt-1.5 text-sm">
+                  <span>Total Payable:</span>
+                  <span className="text-blue-600 font-mono">₹19</span>
+                </div>
+              </div>
+
+              {/* UPI Payment Box */}
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-2.5">
                 <div className="text-xs text-slate-700 font-semibold">
                   Scan to Pay ₹19 via any UPI App (GPay / PhonePe / Paytm)
@@ -287,7 +325,7 @@ Sent from Tools4Genz Mini App`;
                   className="flex-1 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center space-x-1.5 shadow-md shadow-emerald-500/20 active:scale-98"
                 >
                   <Send className="w-3.5 h-3.5" />
-                  <span>Send Order to Telegram</span>
+                  <span>Send Order to Telegram (₹19)</span>
                 </button>
               </div>
             </div>
