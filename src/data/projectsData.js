@@ -1,0 +1,113 @@
+export const PROJECTS = [
+  {
+    id: 'portfolio-19',
+    title: '₹19 Instant Portfolio',
+    category: 'Featured Deal',
+    badge: 'Trending 🔥',
+    description: 'Ultra-fast, mobile-responsive dark-mode portfolio for developers, designers & students at just ₹19.',
+    price: '₹19',
+    originalPrice: '₹499',
+    discount: '96% OFF',
+    features: ['Dark Mode UI', 'Custom Domain Support', 'GitHub/Projects Showcase', 'Delivered in 24 hrs'],
+    isDeal: true,
+  },
+  {
+    id: 'audit-ai',
+    title: 'Audit AI',
+    category: 'AI Platform',
+    badge: 'Popular',
+    description: 'Full-stack automated website analyzer, SEO audit, performance metrics and conversion optimizer.',
+    link: 'https://audit-ai.tools4genz.com',
+    tags: ['React', 'Cloudflare', 'AI Audit', 'SEO'],
+  },
+  {
+    id: 'contactmeqr',
+    title: 'ContactMeQR',
+    category: 'Smart Utilities',
+    badge: 'Gen-Z Tech',
+    description: 'Dynamic digital visiting cards and vehicle windshield privacy-shielded emergency contact QR tags.',
+    link: 'https://contactmeqr.tools4genz.com',
+    tags: ['NFC/QR', 'Privacy Shield', 'Digital Card'],
+  },
+  {
+    id: 'cloud-pos',
+    title: 'Tools4Genz Cloud POS',
+    category: 'Business Software',
+    badge: 'SaaS',
+    description: 'Cloud-native billing, inventory tracking and barcode point-of-sale for retail and supermarkets.',
+    link: 'https://billing.tools4genz.com',
+    tags: ['POS', 'Cloud Database', 'Inventory'],
+  },
+  {
+    id: 'friendsclub',
+    title: 'FriendsClub Audio Pods',
+    category: 'Social Audio',
+    badge: 'Zero-Login',
+    description: 'Instant zero-friction voice rooms and live audio chat platform for Gen-Z communities.',
+    link: 'https://friendsclub.tools4genz.com',
+    tags: ['WebRTC', 'Audio Pods', 'Realtime'],
+  },
+  {
+    id: 'resume-builder',
+    title: 'ATS Resume Builder',
+    category: 'Career Tools',
+    badge: 'Free Utility',
+    description: 'AI-assisted ATS-friendly resume creator with high-conversion templates and instant PDF export.',
+    link: 'https://resumebuilder.tools4genz.com',
+    tags: ['ATS Safe', 'PDF Export', 'LaTeX Style'],
+  },
+];
+
+export const CLIENT_PORTFOLIOS = [
+  {
+    name: 'Alok Modanval',
+    role: 'Full-Stack Developer & Founder',
+    domain: 'alok-modanval.tools4genz.com',
+    features: ['Interactive CLI Mode', 'Cyberpunk HUD', 'Live Metrics'],
+  },
+  {
+    name: 'Omkar Dev',
+    role: 'Frontend & UI/UX Specialist',
+    domain: 'omkar.tools4genz.com',
+    features: ['Modern Glassmorphism', 'Project Showcase', 'Smooth Micro-interactions'],
+  },
+  {
+    name: 'Parbat Tech',
+    role: 'Cybersecurity & Backend Engineer',
+    domain: 'parbat.tools4genz.com',
+    features: ['Matrix Terminal', 'Dark Cyber Theme', 'Security Audits'],
+  },
+  {
+    name: 'Urvashi Studio',
+    role: 'Digital Designer & Creative Developer',
+    domain: 'urvashi.tools4genz.com',
+    features: ['Minimalist Portfolio', 'Visual Gallery', 'Contact Integration'],
+  },
+];
+
+export const WEB_SERVICES = [
+  {
+    id: 'custom-web',
+    title: 'Custom Website Development',
+    price: 'Starting ₹1,499',
+    timeline: '2 - 4 Days',
+    description: 'Custom React, Next.js or Tailwind websites tailored for your startup, personal brand, or client project.',
+    popular: true,
+  },
+  {
+    id: 'ecommerce-pos',
+    title: 'E-commerce & Business Web App',
+    price: 'Starting ₹3,999',
+    timeline: '5 - 7 Days',
+    description: 'Full-stack store or web portal with payments, product catalogs, and custom dashboard.',
+    popular: false,
+  },
+  {
+    id: 'telegram-bot-app',
+    title: 'Custom Telegram Bot / Mini App',
+    price: 'Starting ₹2,499',
+    timeline: '3 - 5 Days',
+    description: 'Turn your business or web utility into a high-engagement Telegram Mini App like this one!',
+    popular: true,
+  },
+];
