@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
-import { X, Sparkles, CheckCircle2, Copy, Send, Eye, ShieldAlert, Palette, ArrowRight } from 'lucide-react';
+import { X, Check, Copy, Send, ArrowRight, ShieldCheck } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
-import confetti from 'canvas-confetti';
 
 export function PortfolioModal({ isOpen, onClose, user, onHaptic, showAlert }) {
-  const [step, setStep] = useState(1); // 1: Info, 2: Preview & Payment
+  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: user?.first_name || '',
-    role: 'Frontend Developer & Creator',
-    bio: 'Passionate about building cool web apps and solving problems with code.',
-    skills: 'React, Tailwind, JavaScript, Git, UI/UX',
+    role: 'Full-Stack Developer',
+    bio: 'Building web applications and developer tools.',
+    skills: 'React, Node.js, Tailwind, Git',
     github: '',
     telegram: user?.username ? `@${user.username}` : '',
-    theme: 'cyberpunk', // cyberpunk | terminal | minimal
+    theme: 'obsidian',
     subdomainChoice: '',
   });
 
   const [copiedUpi, setCopiedUpi] = useState(false);
-  const upiId = 'tools4genz@upi'; // Default UPI ID
+  const upiId = 'tools4genz@upi';
 
   if (!isOpen) return null;
 
@@ -28,7 +27,7 @@ export function PortfolioModal({ isOpen, onClose, user, onHaptic, showAlert }) {
   const handleNext = (e) => {
     e.preventDefault();
     if (!formData.name.trim()) {
-      showAlert('Kripya apna naam enter karein!');
+      showAlert('Kripya apna naam enter karein.');
       return;
     }
     onHaptic('medium');
@@ -44,33 +43,23 @@ export function PortfolioModal({ isOpen, onClose, user, onHaptic, showAlert }) {
 
   const handleCompleteOrder = () => {
     onHaptic('success');
-    try {
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-      });
-    } catch (e) {
-      console.warn(e);
-    }
 
-    const orderText = `🚀 *NEW ₹19 PORTFOLIO ORDER* 🚀
+    const orderText = `🚀 *PORTFOLIO ORDER (₹19 DEAL)* 🚀
 ━━━━━━━━━━━━━━━━━━━━
 👤 *Name:* ${formData.name}
 💼 *Role:* ${formData.role}
-🎨 *Theme:* ${formData.theme}
-🌐 *Preferred Subdomain:* ${formData.subdomainChoice || formData.name.toLowerCase().replace(/\s+/g, '-')}.tools4genz.com
+🎨 *Style:* ${formData.theme}
+🌐 *Subdomain:* ${formData.subdomainChoice || formData.name.toLowerCase().replace(/\s+/g, '-')}.tools4genz.com
 🛠 *Skills:* ${formData.skills}
 📝 *Bio:* ${formData.bio}
 💻 *GitHub:* ${formData.github || 'N/A'}
-📱 *Telegram Contact:* ${formData.telegram || `@${user?.username || 'User'}`}
-💰 *Amount:* ₹19 (Paid via UPI)
+📱 *Telegram:* ${formData.telegram || `@${user?.username || 'User'}`}
+💰 *Amount:* ₹19 (UPI)
 ━━━━━━━━━━━━━━━━━━━━
-Please generate and deploy my portfolio!`;
+Sent from Tools4Genz Mini App`;
 
     const telegramUrl = `https://t.me/alokmodanval?text=${encodeURIComponent(orderText)}`;
     
-    // Open Telegram chat with prefilled text
     if (window.Telegram?.WebApp?.openTelegramLink) {
       window.Telegram.WebApp.openTelegramLink(telegramUrl);
     } else {
@@ -79,52 +68,42 @@ Please generate and deploy my portfolio!`;
   };
 
   const themes = [
-    { id: 'cyberpunk', name: 'Cyber Neon', color: 'from-purple-500 to-cyan-400' },
-    { id: 'terminal', name: 'Hacker CLI', color: 'from-emerald-400 to-green-600' },
-    { id: 'minimal', name: 'Dark Studio', color: 'from-slate-200 to-slate-400' },
+    { id: 'obsidian', name: 'Obsidian Dark' },
+    { id: 'terminal', name: 'Terminal CLI' },
+    { id: 'slate', name: 'Slate Minimal' },
   ];
 
   const upiPayUrl = `upi://pay?pa=${upiId}&pn=Tools4Genz&am=19&cu=INR&tn=Portfolio19_${encodeURIComponent(formData.name || 'User')}`;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-md transition-all">
-      <div className="relative w-full max-w-lg max-h-[92vh] flex flex-col bg-[#0f131f] border border-purple-500/30 rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-sm transition-all">
+      <div className="relative w-full max-w-lg max-h-[92vh] flex flex-col bg-[#0e111a] border border-white/[0.12] rounded-t-2xl sm:rounded-2xl shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-white/10 bg-white/5">
-          <div className="flex items-center space-x-2">
-            <div className="p-1.5 rounded-lg bg-purple-500/20 text-purple-400">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="text-base font-bold text-white flex items-center gap-1.5">
-                ₹19 Instant Portfolio Deal
-                <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
-                  96% OFF
-                </span>
-              </h3>
-              <p className="text-xs text-gray-400">
-                {step === 1 ? 'Step 1: Apni details enter karein' : 'Step 2: Preview & UPI Payment'}
-              </p>
-            </div>
+        <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
+          <div>
+            <h3 className="text-sm font-bold text-white">Instant Portfolio Setup</h3>
+            <p className="text-[11px] text-zinc-400">
+              {step === 1 ? 'Step 1: Apni details enter karein' : 'Step 2: Preview & UPI Payment'}
+            </p>
           </div>
           <button
             onClick={() => {
               onHaptic('light');
               onClose();
             }}
-            className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-gray-400 hover:text-white transition-all"
+            className="p-1 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-zinc-400 hover:text-white"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Scrollable Body */}
-        <div className="p-4 overflow-y-auto space-y-4 flex-1">
+        <div className="p-4 overflow-y-auto space-y-3.5 flex-1">
           {step === 1 ? (
-            <form onSubmit={handleNext} className="space-y-3.5">
+            <form onSubmit={handleNext} className="space-y-3">
               <div>
-                <label className="block text-xs font-semibold text-gray-300 mb-1">
-                  Aapka Pura Naam *
+                <label className="block text-[11px] font-medium text-zinc-300 mb-1">
+                  Pura Naam *
                 </label>
                 <input
                   type="text"
@@ -132,28 +111,28 @@ Please generate and deploy my portfolio!`;
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="e.g. Alok Modanwal"
-                  className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-purple-500 transition-all"
+                  className="w-full px-2.5 py-1.5 rounded-lg bg-black/40 border border-white/[0.08] text-white text-xs focus:outline-none focus:border-zinc-400"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-gray-300 mb-1">
-                  Role / Designation *
+                <label className="block text-[11px] font-medium text-zinc-300 mb-1">
+                  Role / Title *
                 </label>
                 <input
                   type="text"
                   name="role"
                   value={formData.role}
                   onChange={handleChange}
-                  placeholder="e.g. Full Stack Developer / Student"
-                  className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-purple-500 transition-all"
+                  placeholder="e.g. Frontend Developer / Student"
+                  className="w-full px-2.5 py-1.5 rounded-lg bg-black/40 border border-white/[0.08] text-white text-xs focus:outline-none focus:border-zinc-400"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-gray-300 mb-1">
+                <label className="block text-[11px] font-medium text-zinc-300 mb-1">
                   Skills (Comma separated)
                 </label>
                 <input
@@ -161,29 +140,28 @@ Please generate and deploy my portfolio!`;
                   name="skills"
                   value={formData.skills}
                   onChange={handleChange}
-                  placeholder="e.g. React, Python, UI/UX, Node.js"
-                  className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-purple-500 transition-all"
+                  placeholder="React, TypeScript, Python, Tailwind"
+                  className="w-full px-2.5 py-1.5 rounded-lg bg-black/40 border border-white/[0.08] text-white text-xs focus:outline-none focus:border-zinc-400"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-gray-300 mb-1">
-                  Bio / Tagline
+                <label className="block text-[11px] font-medium text-zinc-300 mb-1">
+                  Short Bio
                 </label>
                 <textarea
                   name="bio"
                   rows={2}
                   value={formData.bio}
                   onChange={handleChange}
-                  placeholder="Apne baare mein 1-2 lines..."
-                  className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-purple-500 transition-all"
+                  placeholder="1-2 lines apne baare me..."
+                  className="w-full px-2.5 py-2 rounded-lg bg-black/40 border border-white/[0.08] text-white text-xs focus:outline-none focus:border-zinc-400"
                 />
               </div>
 
-              {/* Theme Picker */}
               <div>
-                <label className="block text-xs font-semibold text-gray-300 mb-2 flex items-center gap-1">
-                  <Palette className="w-3.5 h-3.5 text-purple-400" /> Choose Portfolio Theme
+                <label className="block text-[11px] font-medium text-zinc-300 mb-1.5">
+                  Design Aesthetic
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   {themes.map((t) => (
@@ -194,14 +172,13 @@ Please generate and deploy my portfolio!`;
                         onHaptic('selection');
                         setFormData({ ...formData, theme: t.id });
                       }}
-                      className={`p-2 rounded-xl border text-left transition-all ${
+                      className={`p-2 rounded-lg border text-center transition-all ${
                         formData.theme === t.id
-                          ? 'bg-purple-500/20 border-purple-500 ring-1 ring-purple-500'
-                          : 'bg-black/30 border-white/10 text-gray-400 hover:border-white/20'
+                          ? 'bg-white/[0.1] border-white text-white font-medium'
+                          : 'bg-black/30 border-white/[0.06] text-zinc-400 hover:border-white/[0.12]'
                       }`}
                     >
-                      <div className={`h-1.5 w-full rounded-full bg-gradient-to-r ${t.color} mb-1.5`} />
-                      <div className="text-xs font-medium text-white">{t.name}</div>
+                      <span className="text-xs">{t.name}</span>
                     </button>
                   ))}
                 </div>
@@ -209,7 +186,7 @@ Please generate and deploy my portfolio!`;
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-300 mb-1">
+                  <label className="block text-[11px] font-medium text-zinc-300 mb-1">
                     GitHub Username
                   </label>
                   <input
@@ -218,12 +195,12 @@ Please generate and deploy my portfolio!`;
                     value={formData.github}
                     onChange={handleChange}
                     placeholder="e.g. alokmodanwal"
-                    className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 text-xs focus:outline-none focus:border-purple-500"
+                    className="w-full px-2.5 py-1.5 rounded-lg bg-black/40 border border-white/[0.08] text-white text-xs focus:outline-none focus:border-zinc-400"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-300 mb-1">
-                    Free Subdomain
+                  <label className="block text-[11px] font-medium text-zinc-300 mb-1">
+                    Subdomain
                   </label>
                   <input
                     type="text"
@@ -231,99 +208,85 @@ Please generate and deploy my portfolio!`;
                     value={formData.subdomainChoice}
                     onChange={handleChange}
                     placeholder="naam.tools4genz.com"
-                    className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 text-xs focus:outline-none focus:border-purple-500"
+                    className="w-full px-2.5 py-1.5 rounded-lg bg-black/40 border border-white/[0.08] text-white text-xs focus:outline-none focus:border-zinc-400"
                   />
                 </div>
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3 mt-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-purple-600/30 flex items-center justify-center space-x-2 active:scale-98 transition-all"
+                className="w-full py-2.5 mt-1 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs flex items-center justify-center space-x-1.5 active:scale-98 transition-all"
               >
-                <span>Live Preview & Order (₹19)</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>Continue to Preview & Payment (₹19)</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </form>
           ) : (
-            <div className="space-y-4">
-              {/* Mini Preview Card */}
-              <div className="p-3.5 rounded-2xl bg-gradient-to-br from-[#121624] to-[#1a1f33] border border-purple-500/40 relative overflow-hidden">
-                <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold border border-emerald-500/30">
-                  Live Preview
-                </div>
-                <div className="flex items-center space-x-3 mb-2">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-500 to-cyan-400 p-[2px]">
-                    <div className="w-full h-full rounded-full bg-[#0d1017] flex items-center justify-center font-bold text-white text-sm">
+            <div className="space-y-3.5">
+              {/* Preview Box */}
+              <div className="p-3.5 rounded-xl surface-raised border border-white/[0.1] space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-white/[0.08] flex items-center justify-center font-bold text-white text-xs">
                       {formData.name.charAt(0).toUpperCase()}
                     </div>
+                    <div>
+                      <div className="text-xs font-semibold text-white">{formData.name}</div>
+                      <div className="text-[11px] text-zinc-400">{formData.role}</div>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-white">{formData.name}</h4>
-                    <p className="text-xs text-purple-400">{formData.role}</p>
-                  </div>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/[0.05] text-zinc-300 border border-white/[0.08]">
+                    Live Preview
+                  </span>
                 </div>
-                <p className="text-xs text-gray-300 line-clamp-2 mb-2 italic">
+
+                <p className="text-[11px] text-zinc-300 italic">
                   "{formData.bio}"
                 </p>
-                <div className="flex flex-wrap gap-1 mb-2">
-                  {formData.skills.split(',').slice(0, 4).map((s, idx) => (
-                    <span
-                      key={idx}
-                      className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-gray-300"
-                    >
-                      {s.trim()}
-                    </span>
-                  ))}
-                </div>
-                <div className="text-[11px] text-cyan-400 font-mono flex items-center gap-1">
-                  <span>🔗 {formData.subdomainChoice || formData.name.toLowerCase().replace(/\s+/g, '-')}.tools4genz.com</span>
+
+                <div className="text-[10px] font-mono text-emerald-400">
+                  https://{formData.subdomainChoice || formData.name.toLowerCase().replace(/\s+/g, '-')}.tools4genz.com
                 </div>
               </div>
 
-              {/* Payment Section */}
-              <div className="p-4 rounded-2xl bg-black/40 border border-white/10 text-center space-y-3">
-                <div className="flex items-center justify-center space-x-1.5 text-xs text-amber-400 font-semibold">
-                  <ShieldAlert className="w-4 h-4" />
-                  <span>Scan or Pay via any UPI App (GPay / PhonePe / Paytm)</span>
+              {/* UPI Payment */}
+              <div className="p-3.5 rounded-xl surface-card text-center space-y-2.5">
+                <div className="text-xs text-zinc-300 font-medium">
+                  Scan to Pay ₹19 (Any UPI App: GPay / PhonePe / Paytm)
                 </div>
 
-                <div className="inline-block p-3 rounded-2xl bg-white shadow-xl mx-auto">
-                  <QRCodeSVG value={upiPayUrl} size={135} level="M" />
+                <div className="inline-block p-2.5 rounded-xl bg-white shadow mx-auto">
+                  <QRCodeSVG value={upiPayUrl} size={130} level="M" />
                 </div>
 
                 <div className="flex items-center justify-center space-x-2">
-                  <span className="text-xs text-gray-400 font-mono bg-white/5 px-2.5 py-1 rounded-lg border border-white/10">
+                  <span className="text-xs text-zinc-400 font-mono bg-white/[0.04] px-2.5 py-1 rounded border border-white/[0.06]">
                     UPI ID: {upiId}
                   </span>
                   <button
                     onClick={copyUpi}
-                    className="p-1.5 rounded-lg bg-purple-600/30 hover:bg-purple-600/50 text-purple-300 text-xs flex items-center gap-1 transition-all"
+                    className="px-2 py-1 rounded bg-white/[0.08] hover:bg-white/[0.12] text-zinc-200 text-xs transition-colors"
                   >
-                    <Copy className="w-3.5 h-3.5" />
-                    <span>{copiedUpi ? 'Copied!' : 'Copy'}</span>
+                    {copiedUpi ? 'Copied' : 'Copy'}
                   </button>
                 </div>
-
-                <p className="text-[11px] text-gray-400">
-                  Pay ₹19 on UPI and tap the button below. Aapka order Telegram DM me send ho jayega!
-                </p>
               </div>
 
-              {/* Action Buttons */}
+              {/* Submit Buttons */}
               <div className="flex space-x-2">
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-gray-300 text-xs font-semibold transition-all"
+                  className="px-3.5 py-2.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-zinc-300 text-xs font-medium"
                 >
-                  Back
+                  Edit Details
                 </button>
                 <button
                   type="button"
                   onClick={handleCompleteOrder}
-                  className="flex-1 py-3 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-black font-extrabold text-sm shadow-lg shadow-emerald-500/20 flex items-center justify-center space-x-2 active:scale-98 transition-all"
+                  className="flex-1 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold text-xs flex items-center justify-center space-x-1.5 shadow-sm active:scale-98"
                 >
-                  <Send className="w-4 h-4 text-black" />
+                  <Send className="w-3.5 h-3.5" />
                   <span>Send Order to Telegram</span>
                 </button>
               </div>

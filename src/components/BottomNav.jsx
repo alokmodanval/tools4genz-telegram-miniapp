@@ -1,17 +1,17 @@
 import React from 'react';
-import { Flame, Wrench, Layers, User } from 'lucide-react';
+import { Briefcase, Terminal, Globe, User } from 'lucide-react';
 
 export function BottomNav({ activeTab, setActiveTab, onTabClick }) {
   const tabs = [
-    { id: 'services', label: 'Services', icon: Flame, badge: '₹19 Deal' },
-    { id: 'tools', label: 'Tools', icon: Wrench, badge: null },
-    { id: 'projects', label: 'Showcase', icon: Layers, badge: null },
-    { id: 'profile', label: 'Profile', icon: User, badge: null },
+    { id: 'services', label: 'Services', icon: Briefcase },
+    { id: 'tools', label: 'Utilities', icon: Terminal },
+    { id: 'projects', label: 'Showcase', icon: Globe },
+    { id: 'profile', label: 'Contact', icon: User },
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 px-3 py-2 pointer-events-auto">
-      <div className="max-w-md mx-auto glass-panel rounded-2xl p-1.5 shadow-2xl shadow-black/80 border border-white/10 flex items-center justify-around">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 px-4 py-2.5 pointer-events-auto">
+      <div className="max-w-md mx-auto bg-[#0d1017]/95 backdrop-blur-md rounded-2xl p-1.5 border border-white/[0.08] shadow-2xl flex items-center justify-around">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -22,25 +22,20 @@ export function BottomNav({ activeTab, setActiveTab, onTabClick }) {
                 setActiveTab(tab.id);
                 if (onTabClick) onTabClick(tab.id);
               }}
-              className={`relative flex flex-col items-center justify-center flex-1 py-1.5 px-2 rounded-xl transition-all duration-200 select-none ${
+              className={`relative flex flex-col items-center justify-center flex-1 py-2 px-1 rounded-xl transition-all duration-150 select-none ${
                 isActive
-                  ? 'text-white bg-gradient-to-b from-purple-500/20 to-purple-600/10 border border-purple-500/30'
-                  : 'text-gray-400 hover:text-gray-200 hover:bg-white/5 border border-transparent'
+                  ? 'text-white bg-white/[0.08] border border-white/[0.12]'
+                  : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.03] border border-transparent'
               }`}
             >
-              {tab.badge && !isActive && (
-                <span className="absolute -top-1.5 right-1.5 px-1 py-0.2 text-[8px] font-extrabold uppercase bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full leading-none shadow-sm animate-pulse">
-                  {tab.badge}
-                </span>
-              )}
               <Icon
-                className={`w-5 h-5 transition-transform duration-200 ${
-                  isActive ? 'scale-110 text-purple-400' : ''
+                className={`w-4 h-4 transition-transform ${
+                  isActive ? 'scale-105 text-zinc-100' : 'text-zinc-400'
                 }`}
               />
               <span
-                className={`text-[11px] font-semibold tracking-tight mt-1 ${
-                  isActive ? 'text-white' : 'text-gray-400'
+                className={`text-[11px] font-medium tracking-tight mt-1 ${
+                  isActive ? 'text-white font-semibold' : 'text-zinc-400'
                 }`}
               >
                 {tab.label}

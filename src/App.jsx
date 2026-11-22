@@ -11,13 +11,11 @@ import { CustomOrderModal } from './components/CustomOrderModal';
 
 export default function App() {
   const {
-    tg,
     user,
     triggerHaptic,
     openTelegramLink,
     openExternalLink,
     showAlert,
-    showConfirm,
   } = useTelegram();
 
   const [activeTab, setActiveTab] = useState('services');
@@ -27,7 +25,7 @@ export default function App() {
   const handleShare = () => {
     triggerHaptic('light');
     const shareUrl = 'https://t.me/Tools4GenzBot/app';
-    const text = 'Build your portfolio for ₹19 or order custom websites on Tools4Genz Mini App:';
+    const text = 'Tools4Genz - Custom Websites (₹499 with Deployment & SEO), ₹19 Instant Portfolios, aur Developer Utilities:';
     openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(text)}`);
   };
 
@@ -37,11 +35,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0d13] text-gray-100 flex flex-col font-sans relative selection:bg-purple-500/30">
-      {/* Background ambient lighting */}
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-72 bg-gradient-to-b from-purple-900/20 via-transparent to-transparent pointer-events-none blur-3xl -z-10" />
-
-      {/* Top Header */}
+    <div className="min-h-screen bg-[#080a0f] text-zinc-100 flex flex-col font-sans relative">
+      {/* Top Header with Original Tools4Genz Logo */}
       <Header
         user={user}
         onShare={handleShare}
@@ -101,7 +96,7 @@ export default function App() {
         showAlert={showAlert}
       />
 
-      {/* Custom Web & App Order Modal */}
+      {/* ₹499 Custom Website Order Modal */}
       <CustomOrderModal
         isOpen={isCustomModalOpen}
         onClose={() => setIsCustomModalOpen(false)}

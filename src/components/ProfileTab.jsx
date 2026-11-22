@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { User, Shield, Share2, MessageCircle, HelpCircle, ChevronDown, Check, ExternalLink, Sparkles } from 'lucide-react';
+import { User, Share2, MessageSquare, ExternalLink, ChevronDown, Check } from 'lucide-react';
 
 export function ProfileTab({ user, onHaptic, showAlert, openExternalLink, openTelegramLink }) {
   const [copiedShare, setCopiedShare] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
 
-  const botUsername = 'Tools4GenzBot'; // Change or connect to actual bot
-  const shareText = `Check out Tools4Genz Telegram Mini App! Get an instant dark-mode portfolio for just ₹19, order custom websites, or use free dev tools right inside Telegram:`;
+  const botUsername = 'Tools4GenzBot';
+  const shareText = `Tools4Genz Telegram Mini App - Handcrafted Websites (₹499 with Deployment & SEO), ₹19 Instant Portfolios, aur Developer Utilities:`;
   const shareUrl = `https://t.me/${botUsername}/app`;
 
   const handleShare = () => {
@@ -24,149 +24,112 @@ export function ProfileTab({ user, onHaptic, showAlert, openExternalLink, openTe
 
   const faqs = [
     {
-      q: '₹19 portfolio me kya kya milega?',
-      a: 'Aapko ek modern dark-mode responsive portfolio website milegi jisme CLI/Terminal mode, Projects showcase, GitHub stats, skills, aur free .tools4genz.com subdomain include hota hai.',
+      q: '₹499 custom website package me kya include hai?',
+      a: 'Is package me complete responsive design, Cloudflare Pages global CDN deployment, technical SEO (meta tags, Open Graph, sitemap), contact form/WhatsApp integration, aur custom domain ya free .tools4genz.com subdomain connection included hai.',
     },
     {
-      q: 'Portfolio live hone me kitna time lagta hai?',
-      a: 'Details aur UPI payment receive hone ke 24 hours ke andar aapka portfolio live ho jata hai!',
+      q: 'Kya hosting ka alag se koi recurring charge hoga?',
+      a: 'Nahi. Cloudflare Pages par deploy hone ki wajah se normal websites par zero hosting bill aata hai, koi monthly server fee nahi hoti.',
     },
     {
-      q: 'Kya mai apna custom domain attach kar sakta hu?',
-      a: 'Haan! Agar aapke paas apna .com ya .in domain hai, toh hum Cloudflare DNS se use aapke portfolio se connect kar denge.',
+      q: 'Website live hone me kitna time lagta hai?',
+      a: '₹19 portfolio 24 ghante ke andar live ho jata hai. Full custom websites (₹499 package) 48 se 72 ghante ke andar deliver aur deploy hoti hain.',
     },
     {
-      q: 'Custom website ya SaaS banwane ke liye kya karna hoga?',
-      a: 'Services tab me "Order / Inquire" button par click karein ya DM Us karein. Hum aapke requirement ke according 2-5 din me project ready karke dete hain.',
+      q: 'Kya mai apna khud ka .com ya .in domain attach kar sakta hu?',
+      a: 'Bilkul. Agar aapke paas apna domain hai toh hum use bina kisi extra charge ke Cloudflare DNS se configure karke SSL ke sath attach kar denge.',
     },
   ];
 
   return (
-    <div className="space-y-4 pb-20 animate-fadeIn">
-      {/* User Telegram Card */}
-      <div className="p-4 rounded-3xl glass-card border border-purple-500/30 relative overflow-hidden">
-        <div className="flex items-center space-x-3.5">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-600 to-cyan-400 p-[2px] shadow-lg">
-            <div className="w-full h-full rounded-[14px] bg-[#0d1017] flex items-center justify-center font-bold text-white text-xl">
-              {user?.photo_url ? (
-                <img
-                  src={user.photo_url}
-                  alt={user.first_name}
-                  className="w-full h-full object-cover rounded-[14px]"
-                />
-              ) : (
-                (user?.first_name || 'G').charAt(0).toUpperCase()
-              )}
-            </div>
+    <div className="space-y-4 pb-20">
+      {/* User Card */}
+      <div className="p-4 rounded-2xl surface-card flex items-center space-x-3.5">
+        <div className="w-12 h-12 rounded-xl bg-white/[0.08] flex items-center justify-center font-bold text-white text-base border border-white/[0.08]">
+          {user?.first_name ? user.first_name.charAt(0).toUpperCase() : 'U'}
+        </div>
+        <div>
+          <div className="text-sm font-bold text-white">
+            {user?.first_name} {user?.last_name || ''}
           </div>
-
-          <div>
-            <div className="flex items-center space-x-2">
-              <h3 className="text-base font-bold text-white">
-                {user?.first_name} {user?.last_name || ''}
-              </h3>
-              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                Verified
-              </span>
-            </div>
-            <p className="text-xs text-purple-400">
-              {user?.username ? `@${user.username}` : 'Telegram Creator'}
-            </p>
-            <p className="text-[10px] text-gray-500 font-mono mt-0.5">
-              ID: {user?.id || 'Unknown'}
-            </p>
+          <div className="text-xs text-zinc-400 font-mono">
+            {user?.username ? `@${user.username}` : 'Telegram User'}
+          </div>
+          <div className="text-[10px] text-zinc-500 font-mono mt-0.5">
+            ID: {user?.id || 'N/A'}
           </div>
         </div>
       </div>
 
-      {/* Share & Earn Card */}
-      <div className="p-4 rounded-3xl bg-gradient-to-r from-purple-950/40 via-[#151929] to-indigo-950/40 border border-purple-500/30 space-y-3">
-        <div className="flex items-center justify-between">
-          <div>
-            <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              <span>Share Tools4Genz with Friends</span>
-            </h4>
-            <p className="text-[11px] text-gray-400 mt-0.5">
-              Dosto ko ₹19 portfolio aur free dev tools ke baare me batayein!
-            </p>
-          </div>
+      {/* Share Box */}
+      <div className="p-3.5 rounded-2xl surface-card space-y-2.5">
+        <div>
+          <h4 className="text-xs font-semibold text-white">Share Tools4Genz</h4>
+          <p className="text-[11px] text-zinc-400">Share this Mini App with colleagues and friends.</p>
         </div>
-
         <div className="flex space-x-2">
           <button
             onClick={handleShare}
-            className="flex-1 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold shadow-md shadow-purple-600/30 flex items-center justify-center gap-1.5 active:scale-95 transition-all"
+            className="flex-1 py-2 rounded-xl bg-white/[0.08] hover:bg-white/[0.12] text-white text-xs font-medium flex items-center justify-center space-x-1.5 transition-colors"
           >
             <Share2 className="w-3.5 h-3.5" />
-            <span>Share on Telegram</span>
+            <span>Share via Telegram</span>
           </button>
           <button
             onClick={copyShareLink}
-            className="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold flex items-center justify-center gap-1.5 active:scale-95 transition-all"
+            className="px-3 py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 text-xs font-mono"
           >
-            {copiedShare ? (
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
-            ) : (
-              <span className="text-xs">Copy Link</span>
-            )}
+            {copiedShare ? 'Copied' : 'Copy'}
           </button>
         </div>
       </div>
 
-      {/* Quick Links */}
-      <div className="space-y-2">
-        <span className="text-xs font-bold text-gray-400 uppercase tracking-wider px-1">
-          Support & Links
+      {/* Contact Links */}
+      <div className="space-y-1.5">
+        <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider px-1">
+          Direct Contact
         </span>
-
-        <div className="rounded-2xl glass-card border border-white/10 divide-y divide-white/5 overflow-hidden">
+        <div className="rounded-xl surface-card divide-y divide-white/[0.04] overflow-hidden">
           <button
             onClick={() => openTelegramLink('https://t.me/alokmodanval')}
-            className="w-full p-3 flex items-center justify-between hover:bg-white/5 transition-all text-left"
+            className="w-full p-3 flex items-center justify-between hover:bg-white/[0.02] text-left"
           >
             <div className="flex items-center space-x-2.5">
-              <div className="p-1.5 rounded-lg bg-cyan-500/20 text-cyan-400">
-                <MessageCircle className="w-4 h-4" />
-              </div>
+              <MessageSquare className="w-4 h-4 text-zinc-400" />
               <div>
-                <div className="text-xs font-bold text-white">Direct Chat with Developer</div>
-                <div className="text-[10px] text-gray-400">@alokmodanval on Telegram</div>
+                <div className="text-xs font-medium text-white">Developer Direct Chat</div>
+                <div className="text-[10px] text-zinc-400 font-mono">@alokmodanval</div>
               </div>
             </div>
-            <ExternalLink className="w-3.5 h-3.5 text-gray-500" />
+            <ExternalLink className="w-3.5 h-3.5 text-zinc-500" />
           </button>
 
           <button
             onClick={() => openExternalLink('https://tools4genz.com')}
-            className="w-full p-3 flex items-center justify-between hover:bg-white/5 transition-all text-left"
+            className="w-full p-3 flex items-center justify-between hover:bg-white/[0.02] text-left"
           >
             <div className="flex items-center space-x-2.5">
-              <div className="p-1.5 rounded-lg bg-purple-500/20 text-purple-400">
-                <ExternalLink className="w-4 h-4" />
-              </div>
+              <ExternalLink className="w-4 h-4 text-zinc-400" />
               <div>
-                <div className="text-xs font-bold text-white">Visit tools4genz.com</div>
-                <div className="text-[10px] text-gray-400">Main Web Portal</div>
+                <div className="text-xs font-medium text-white">Main Website</div>
+                <div className="text-[10px] text-zinc-400 font-mono">tools4genz.com</div>
               </div>
             </div>
-            <ExternalLink className="w-3.5 h-3.5 text-gray-500" />
+            <ExternalLink className="w-3.5 h-3.5 text-zinc-500" />
           </button>
         </div>
       </div>
 
       {/* FAQs */}
-      <div className="space-y-2 pt-1">
-        <span className="text-xs font-bold text-gray-400 uppercase tracking-wider px-1 flex items-center gap-1">
-          <HelpCircle className="w-3.5 h-3.5 text-purple-400" />
-          <span>Frequently Asked Questions</span>
+      <div className="space-y-1.5 pt-1">
+        <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider px-1">
+          Frequently Asked Questions
         </span>
-
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           {faqs.map((faq, idx) => (
             <div
               key={idx}
-              className="rounded-2xl glass-card border border-white/10 overflow-hidden transition-all"
+              className="rounded-xl surface-card overflow-hidden"
             >
               <button
                 onClick={() => {
@@ -175,15 +138,15 @@ export function ProfileTab({ user, onHaptic, showAlert, openExternalLink, openTe
                 }}
                 className="w-full p-3 flex items-center justify-between text-left"
               >
-                <span className="text-xs font-semibold text-gray-200">{faq.q}</span>
+                <span className="text-xs font-medium text-zinc-200">{faq.q}</span>
                 <ChevronDown
-                  className={`w-3.5 h-3.5 text-gray-400 transition-transform ${
-                    openFaq === idx ? 'rotate-180 text-purple-400' : ''
+                  className={`w-3.5 h-3.5 text-zinc-400 transition-transform ${
+                    openFaq === idx ? 'rotate-180' : ''
                   }`}
                 />
               </button>
               {openFaq === idx && (
-                <div className="px-3 pb-3 text-xs text-gray-400 border-t border-white/5 pt-2">
+                <div className="px-3 pb-3 text-[11px] text-zinc-400 border-t border-white/[0.04] pt-2 leading-relaxed">
                   {faq.a}
                 </div>
               )}

@@ -1,75 +1,126 @@
 import React from 'react';
-import { Sparkles, Flame, ArrowRight, Check, Zap, Globe, Shield, Terminal, Star } from 'lucide-react';
-import { WEB_SERVICES } from '../data/projectsData';
+import { ArrowRight, Check, ShieldCheck, Zap, Globe, Laptop, Terminal } from 'lucide-react';
 
 export function ServicesTab({ onOpenPortfolioModal, onOpenCustomModal, onHaptic }) {
   return (
-    <div className="space-y-4 pb-20 animate-fadeIn">
-      {/* Hero Banner */}
-      <div className="relative p-4 rounded-3xl bg-gradient-to-br from-purple-900/50 via-[#131626] to-[#0f111c] border border-purple-500/30 overflow-hidden shadow-2xl">
-        <div className="absolute top-0 right-0 w-36 h-36 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-36 h-36 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 space-y-2">
-          <div className="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-300 text-[11px] font-semibold">
-            <Flame className="w-3.5 h-3.5 text-pink-400" />
-            <span>Tools4Genz Exclusive Deals</span>
-          </div>
-          
-          <h2 className="text-xl font-extrabold text-white tracking-tight leading-snug">
-            Build your Web & Digital Brand in Minutes 🚀
-          </h2>
-          
-          <p className="text-xs text-gray-300 leading-relaxed">
-            Personal dark-mode portfolios, custom startup websites aur business web apps at student-friendly pricing.
-          </p>
+    <div className="space-y-4 pb-20">
+      {/* Studio Header */}
+      <div className="p-4 rounded-2xl surface-card space-y-2">
+        <div className="flex items-center space-x-2">
+          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.06] text-zinc-300 border border-white/[0.08]">
+            Web Engineering & Studio
+          </span>
+          <span className="text-zinc-500 text-xs">•</span>
+          <span className="text-[11px] text-zinc-400">Zero Recurring Hosting Costs</span>
         </div>
+        <h2 className="text-lg font-bold text-white tracking-tight">
+          Modern web development, built cleanly.
+        </h2>
+        <p className="text-xs text-zinc-400 leading-relaxed">
+          Har website ko genuine handcrafted code se develop kiya jata hai, production-grade Cloudflare par deploy hota hai with complete SEO optimization.
+        </p>
       </div>
 
-      {/* Flagship Deal: ₹19 Instant Portfolio */}
-      <div className="relative p-4 rounded-3xl bg-gradient-to-r from-purple-950/60 via-[#161b2e] to-indigo-950/60 border-2 border-purple-500/50 shadow-xl overflow-hidden">
-        <div className="absolute -top-6 -right-6 w-24 h-24 bg-pink-500/30 rounded-full blur-2xl pointer-events-none" />
-        
-        <div className="flex items-start justify-between mb-3">
+      {/* Featured Service: ₹499 Custom Website Package */}
+      <div className="p-4 rounded-2xl surface-raised border border-white/[0.14] space-y-3.5 relative overflow-hidden">
+        <div className="flex items-start justify-between">
           <div>
-            <div className="flex items-center space-x-2">
-              <span className="px-2 py-0.5 rounded-full bg-rose-500 text-white text-[10px] font-extrabold tracking-wide uppercase shadow-sm">
-                LIMITED OFFER 🔥
-              </span>
-              <span className="text-xs text-purple-400 font-bold">96% Discount</span>
+            <div className="inline-flex items-center space-x-1.5 px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-semibold mb-1">
+              <span>All-Inclusive Package</span>
             </div>
-            <h3 className="text-lg font-black text-white mt-1">
-              ₹19 Instant Portfolio Builder
+            <h3 className="text-base font-bold text-white">
+              Full Custom Website
             </h3>
+            <p className="text-xs text-zinc-400 mt-0.5">
+              Landing page, business showcase ya portfolio website
+            </p>
           </div>
           <div className="text-right">
-            <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-pink-400">
-              ₹19
+            <div className="text-xl font-bold font-mono text-white">
+              ₹499
             </div>
-            <div className="text-[11px] text-gray-400 line-through">₹499</div>
+            <div className="text-[10px] text-zinc-400 font-mono">
+              One-time fee
+            </div>
           </div>
         </div>
 
-        <p className="text-xs text-gray-300 mb-3.5">
-          Apna professional dark-mode portfolio banwayein with interactive CLI mode, GitHub integration, and free <code className="text-cyan-300 bg-black/40 px-1 py-0.5 rounded">.tools4genz.com</code> subdomain!
-        </p>
+        {/* Feature List */}
+        <div className="grid grid-cols-1 gap-2 pt-1 border-t border-white/[0.06] text-xs text-zinc-300">
+          <div className="flex items-center space-x-2">
+            <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+            <span><strong>Full Deployment:</strong> Cloudflare Pages global CDN par live hosting</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+            <span><strong>Complete SEO:</strong> Meta tags, Open Graph, Sitemap & Fast Indexing</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+            <span><strong>Mobile & Speed Optimized:</strong> 95+ Core Web Vitals score</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+            <span><strong>Domain Setup:</strong> Free <code className="code-tag text-zinc-200">.tools4genz.com</code> ya aapka apna custom domain</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+            <span><strong>Timeline:</strong> 48 se 72 ghante me live delivery</span>
+          </div>
+        </div>
 
-        <div className="grid grid-cols-2 gap-2 mb-4 text-[11px] text-gray-300">
-          <div className="flex items-center gap-1.5">
-            <Check className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Live in 24 Hours</span>
+        <button
+          onClick={() => {
+            onHaptic('medium');
+            onOpenCustomModal();
+          }}
+          className="w-full py-2.5 rounded-xl bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs transition-all flex items-center justify-center space-x-2 active:scale-98 shadow-sm"
+        >
+          <span>Order Custom Website (₹499)</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </button>
+      </div>
+
+      {/* Second Deal: ₹19 Instant Portfolio */}
+      <div className="p-4 rounded-2xl surface-card space-y-3">
+        <div className="flex items-start justify-between">
+          <div>
+            <div className="inline-flex items-center space-x-1.5 px-2 py-0.5 rounded bg-white/[0.06] text-zinc-300 border border-white/[0.08] text-[10px] font-mono mb-1">
+              <span>Developer Special</span>
+            </div>
+            <h3 className="text-sm font-bold text-white">
+              Instant Student & Dev Portfolio
+            </h3>
+            <p className="text-xs text-zinc-400 mt-0.5">
+              Personal dark-mode portfolio with interactive CLI mode
+            </p>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Check className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Mobile & Dark Mode</span>
+          <div className="text-right">
+            <div className="text-lg font-bold font-mono text-zinc-100">
+              ₹19
+            </div>
+            <div className="text-[10px] text-zinc-400 font-mono">
+              24h delivery
+            </div>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Check className="w-3.5 h-3.5 text-emerald-400" />
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 text-[11px] text-zinc-300">
+          <div className="flex items-center space-x-1.5">
+            <Check className="w-3 h-3 text-emerald-400" />
+            <span>Terminal CLI Mode</span>
+          </div>
+          <div className="flex items-center space-x-1.5">
+            <Check className="w-3 h-3 text-emerald-400" />
+            <span>GitHub Showcases</span>
+          </div>
+          <div className="flex items-center space-x-1.5">
+            <Check className="w-3 h-3 text-emerald-400" />
             <span>Subdomain Included</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Check className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Easy UPI Payment</span>
+          <div className="flex items-center space-x-1.5">
+            <Check className="w-3 h-3 text-emerald-400" />
+            <span>Zero Server Bill</span>
           </div>
         </div>
 
@@ -78,70 +129,31 @@ export function ServicesTab({ onOpenPortfolioModal, onOpenCustomModal, onHaptic 
             onHaptic('medium');
             onOpenPortfolioModal();
           }}
-          className="w-full py-3 rounded-2xl bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 text-white font-extrabold text-sm shadow-lg shadow-purple-600/30 flex items-center justify-center space-x-2 active:scale-98 transition-all"
+          className="w-full py-2.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.12] border border-white/[0.1] text-white font-medium text-xs transition-all flex items-center justify-center space-x-2 active:scale-98"
         >
-          <Sparkles className="w-4 h-4 text-amber-200" />
-          <span>Claim Portfolio for ₹19</span>
-          <ArrowRight className="w-4 h-4" />
+          <span>Build Portfolio for ₹19</span>
+          <ArrowRight className="w-3.5 h-3.5" />
         </button>
       </div>
 
-      {/* Custom Website Development Order Section */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between px-1">
-          <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
-            <Globe className="w-4 h-4 text-cyan-400" />
-            <span>Custom Web Development & Orders</span>
-          </h3>
-          <span className="text-[11px] text-gray-400">Fixed & Fair Pricing</span>
-        </div>
-
-        {WEB_SERVICES.map((srv) => (
-          <div
-            key={srv.id}
-            className="p-3.5 rounded-2xl glass-card border border-white/10 hover:border-cyan-500/30 transition-all flex flex-col justify-between"
-          >
-            <div className="flex items-start justify-between">
-              <div>
-                <div className="flex items-center space-x-2">
-                  <h4 className="text-sm font-bold text-white">{srv.title}</h4>
-                  {srv.popular && (
-                    <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                      Popular
-                    </span>
-                  )}
-                </div>
-                <p className="text-xs text-gray-400 mt-1">{srv.description}</p>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-white/5">
-              <div>
-                <span className="text-xs font-bold text-cyan-400">{srv.price}</span>
-                <span className="text-[10px] text-gray-500 ml-2">🕒 {srv.timeline}</span>
-              </div>
-              <button
-                onClick={() => {
-                  onHaptic('medium');
-                  onOpenCustomModal();
-                }}
-                className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-cyan-500/20 text-xs font-semibold text-white border border-white/10 hover:border-cyan-500/40 active:scale-95 transition-all"
-              >
-                Order / Inquire
-              </button>
-            </div>
+      {/* Simple Work Process */}
+      <div className="p-3.5 rounded-2xl surface-card space-y-2">
+        <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">
+          How It Works
+        </span>
+        <div className="grid grid-cols-3 gap-2 text-center pt-1">
+          <div className="p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+            <div className="text-xs font-mono text-zinc-300 font-bold mb-1">01. Brief</div>
+            <p className="text-[10px] text-zinc-400">Requirements & content share karein</p>
           </div>
-        ))}
-      </div>
-
-      {/* Trust & Guarantee Banner */}
-      <div className="p-3 rounded-2xl bg-black/40 border border-white/5 flex items-center space-x-3 text-xs text-gray-400">
-        <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
-          <Shield className="w-4 h-4" />
-        </div>
-        <div>
-          <span className="text-gray-200 font-semibold">100% Satisfaction & Speed</span>
-          <p className="text-[11px]">Direct developer support on Telegram with free SSL & cloud hosting.</p>
+          <div className="p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+            <div className="text-xs font-mono text-zinc-300 font-bold mb-1">02. Build</div>
+            <p className="text-[10px] text-zinc-400">Design, code & SEO configuration</p>
+          </div>
+          <div className="p-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+            <div className="text-xs font-mono text-zinc-300 font-bold mb-1">03. Live</div>
+            <p className="text-[10px] text-zinc-400">Domain link aur handover</p>
+          </div>
         </div>
       </div>
     </div>
