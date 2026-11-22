@@ -25,7 +25,7 @@ export default function App() {
   const handleShare = () => {
     triggerHaptic('light');
     const shareUrl = 'https://t.me/Tools4GenzBot/app';
-    const text = 'Tools4Genz - Custom Websites (₹499 with Deployment & SEO), ₹19 Instant Portfolios, aur Developer Utilities:';
+    const text = 'Tools4Genz - Custom Websites @ ₹499 (with Cloudflare Deployment & SEO), ₹19 Instant Portfolios, aur Developer Utilities:';
     openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(text)}`);
   };
 
@@ -35,7 +35,10 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#080a0f] text-zinc-100 flex flex-col font-sans relative">
+    <div className="min-h-screen bg-[#f8faff] text-slate-800 flex flex-col font-sans relative selection:bg-blue-100 selection:text-blue-900">
+      {/* Subtle ambient lighting */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-72 bg-gradient-to-b from-blue-100/40 via-cyan-50/20 to-transparent pointer-events-none blur-3xl -z-10" />
+
       {/* Top Header with Original Tools4Genz Logo */}
       <Header
         user={user}
@@ -44,7 +47,7 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 w-full max-w-md mx-auto px-4 pt-3 pb-8">
+      <main className="flex-1 w-full max-w-md mx-auto px-4 pt-3.5 pb-8">
         {activeTab === 'services' && (
           <ServicesTab
             onOpenPortfolioModal={() => setIsPortfolioModalOpen(true)}
