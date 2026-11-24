@@ -48,10 +48,29 @@ export function useTelegram() {
   // Open Telegram links safely
   const openTelegramLink = (url) => {
     triggerHaptic('light');
-    if (tg?.openTelegramLink) {
-      tg.openTelegramLink(url);
-    } else {
-      window.open(url, '_blank');
+    const isInsideTelegram = Boolean(
+      typeof window !== 'undefined' &&
+      window.Telegram?.WebApp?.initData &&
+      window.Telegram.WebApp.initData.length > 0
+    );
+
+    if (isInsideTelegram && tg?.openTelegramLink) {
+      try {
+        tg.openTelegramLink(url);
+        return;
+      } catch (e) {
+        console.warn('Native openTelegramLink error:', e);
+      }
+    }
+
+    // Direct browser navigation / window.open fallback
+    try {
+      const win = window.open(url, '_blank', 'noopener,noreferrer');
+      if (!win) {
+        window.location.href = url;
+      }
+    } catch (e) {
+      window.location.href = url;
     }
   };
 

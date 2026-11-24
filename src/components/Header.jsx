@@ -45,13 +45,21 @@ export function Header({ user, onShare, onContact }) {
           >
             <Share2 className="w-4 h-4" />
           </button>
-          <button
-            onClick={onContact}
-            className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-semibold shadow-md shadow-blue-500/20 transition-all flex items-center space-x-1.5 active:scale-95"
+          <a
+            href="https://t.me/alokmodanval"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => {
+              if (typeof window !== 'undefined' && window.Telegram?.WebApp?.initData) {
+                e.preventDefault();
+                onContact();
+              }
+            }}
+            className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-semibold shadow-md shadow-blue-500/20 transition-all flex items-center space-x-1.5 active:scale-95 cursor-pointer select-none"
           >
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Chat</span>
-          </button>
+          </a>
         </div>
       </div>
     </header>
