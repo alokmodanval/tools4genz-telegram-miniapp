@@ -16,7 +16,7 @@ export function PortfolioModal({ isOpen, onClose, user, onHaptic, showAlert }) {
   });
 
   const [copiedUpi, setCopiedUpi] = useState(false);
-  const upiId = 'tools4genz@upi';
+  const upiId = '9016138307@ptyes';
 
   if (!isOpen) return null;
 

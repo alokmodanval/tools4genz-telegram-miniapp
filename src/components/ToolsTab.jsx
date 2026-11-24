@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { QrCode, KeyRound, Type, ExternalLink, Copy, Check, RefreshCw } from 'lucide-react';
+import { triggerMonetagAd } from '../utils/adManager';
 
 export function ToolsTab({ onHaptic, showAlert, openExternalLink }) {
   const [activeSubTool, setActiveSubTool] = useState('qr');
@@ -154,7 +155,10 @@ export function ToolsTab({ onHaptic, showAlert, openExternalLink }) {
               Secure Key Generator
             </h3>
             <button
-              onClick={generatePassword}
+              onClick={() => {
+                generatePassword();
+                triggerMonetagAd('password_regenerate');
+              }}
               className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900"
               title="Regenerate"
             >

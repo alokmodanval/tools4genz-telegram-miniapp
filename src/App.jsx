@@ -8,6 +8,7 @@ import { ProjectsTab } from './components/ProjectsTab';
 import { ProfileTab } from './components/ProfileTab';
 import { PortfolioModal } from './components/PortfolioModal';
 import { CustomOrderModal } from './components/CustomOrderModal';
+import { triggerMonetagAd } from './utils/adManager';
 
 export default function App() {
   const {
@@ -87,7 +88,10 @@ export default function App() {
       <BottomNav
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        onTabClick={() => triggerHaptic('selection')}
+        onTabClick={(tabId) => {
+          triggerHaptic('selection');
+          triggerMonetagAd('tab_' + tabId);
+        }}
       />
 
       {/* ₹19 Portfolio Order Modal */}
