@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Check, Copy, Send, ArrowRight, Flame, Sparkles, Upload, Image as ImageIcon, Phone } from 'lucide-react';
+import { X, Check, Copy, Send, ArrowRight, Flame, Sparkles, Upload, Image as ImageIcon, Phone, CheckCircle2, MessageSquare } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import confetti from 'canvas-confetti';
 
@@ -32,6 +32,8 @@ export function PortfolioModal({ isOpen, onClose, user, onHaptic, showAlert }) {
   const [screenshotName, setScreenshotName] = useState('');
   const [copiedUpi, setCopiedUpi] = useState(false);
   const [orderSent, setOrderSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionSuccess, setSubmissionSuccess] = useState(false);
   const upiId = '9016138307@ptyes';
 
   if (!isOpen) return null;
@@ -102,14 +104,51 @@ export function PortfolioModal({ isOpen, onClose, user, onHaptic, showAlert }) {
     }
   };
 
-  const handleCompleteOrder = () => {
-    onHaptic('success');
+  const handleCompleteOrder = async () => {
+    setIsSubmitting(true);
+    onHaptic('medium');
+
+    const orderPayload = {
+      orderType: 'Instant Portfolio (₹19 Flash Deal)',
+      amount: '₹19',
+      name: formData.name,
+      role: formData.role,
+      phone: formData.phone,
+      instagram: formData.instagram,
+      telegram: formData.telegram,
+      theme: formData.theme,
+      domain: `${formData.subdomainChoice || formData.name.toLowerCase().replace(/\s+/g, '-')}.tools4genz.com`,
+      skills: formData.skills,
+      bio: formData.bio,
+      github: formData.github,
+      screenshot: screenshotPreview,
+      telegramUser: window.Telegram?.WebApp?.initDataUnsafe?.user || user || null,
+    };
+
+    let serverSuccess = false;
+    try {
+      const res = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderPayload),
+      });
+      const resJson = await res.json();
+      if (resJson.success) {
+        serverSuccess = true;
+      }
+    } catch (e) {
+      console.warn('API /api/order error:', e);
+    }
+
+    setIsSubmitting(false);
     setOrderSent(true);
+    setSubmissionSuccess(serverSuccess);
+    onHaptic('success');
 
     try {
       confetti({
-        particleCount: 90,
-        spread: 60,
+        particleCount: 100,
+        spread: 70,
         origin: { y: 0.6 },
       });
     } catch (e) {
@@ -140,8 +179,11 @@ Sent from Tools4Genz Mini App`;
       console.warn(err);
     }
 
-    const telegramUrl = `https://t.me/alokmodanval?text=${encodeURIComponent(orderText)}`;
-    openTelegramDirect(telegramUrl);
+    // If server delivery wasn't configured yet or failed, open Telegram chat as fallback
+    if (!serverSuccess) {
+      const telegramUrl = `https://t.me/alokmodanval?text=${encodeURIComponent(orderText)}`;
+      openTelegramDirect(telegramUrl);
+    }
   };
 
   const themes = [
@@ -480,43 +522,86 @@ Sent from Tools4Genz Mini App`;
                 )}
               </div>
 
-              {/* Submit Buttons */}
-              <div className="space-y-2">
-                <div className="flex space-x-2">
-                  <button
-                    type="button"
-                    onClick={() => setStep(1)}
-                    className="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleCompleteOrder}
-                    className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center space-x-1.5 shadow-md shadow-emerald-500/20 active:scale-98 cursor-pointer"
-                  >
-                    <Send className="w-3.5 h-3.5" />
-                    <span>Submit Order to Telegram (₹19)</span>
-                  </button>
-                </div>
-
-                {/* Direct fallback link if Telegram doesn't auto-open */}
-                {orderSent && (
-                  <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-200 text-center space-y-1">
-                    <p className="text-[11px] text-blue-900 font-medium">
-                      Order details clipboard par copy ho chuke hain!
-                    </p>
+              {/* Submit Buttons / Success View */}
+              {submissionSuccess ? (
+                <div className="p-4 rounded-2xl bg-gradient-to-b from-emerald-50 to-teal-50/50 border border-emerald-200 text-center space-y-2.5 animate-fadeIn">
+                  <div className="w-12 h-12 mx-auto rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-lg shadow-emerald-500/30">
+                    <CheckCircle2 className="w-6 h-6" />
+                  </div>
+                  <h4 className="text-sm font-bold text-emerald-950">
+                    Order Received Successfully!
+                  </h4>
+                  <p className="text-xs text-emerald-800 leading-relaxed">
+                    Aapka order pure details aur payment receipt ke saath direct hamare Telegram par deliver ho gaya hai. Hamari team jald hi aapse WhatsApp ya Telegram par contact karegi!
+                  </p>
+                  <div className="pt-1 flex flex-col gap-2">
                     <a
                       href={generatedOrderLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-bold text-blue-700 hover:underline"
+                      className="w-full py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md shadow-emerald-500/20 flex items-center justify-center gap-1.5 transition-all"
                     >
-                      <span>👉 Click here if Telegram didn't open automatically</span>
+                      <MessageSquare className="w-4 h-4" />
+                      <span>Chat with @alokmodanval (Optional)</span>
                     </a>
+                    <button
+                      type="button"
+                      onClick={onClose}
+                      className="w-full py-2 px-3 rounded-xl bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-200 transition-colors"
+                    >
+                      Close Window
+                    </button>
                   </div>
-                )}
-              </div>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <div className="flex space-x-2">
+                    <button
+                      type="button"
+                      disabled={isSubmitting}
+                      onClick={() => setStep(1)}
+                      className="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold disabled:opacity-50"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      disabled={isSubmitting}
+                      onClick={handleCompleteOrder}
+                      className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center space-x-1.5 shadow-md shadow-emerald-500/20 active:scale-98 cursor-pointer disabled:opacity-75"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          <span>Delivering to Telegram...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-3.5 h-3.5" />
+                          <span>Submit Order to Telegram (₹19)</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Direct fallback link if Telegram doesn't auto-open */}
+                  {orderSent && !submissionSuccess && (
+                    <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-200 text-center space-y-1">
+                      <p className="text-[11px] text-blue-900 font-medium">
+                        Order details clipboard par copy ho chuke hain!
+                      </p>
+                      <a
+                        href={generatedOrderLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs font-bold text-blue-700 hover:underline"
+                      >
+                        <span>👉 Click here if Telegram didn't open automatically</span>
+                      </a>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>

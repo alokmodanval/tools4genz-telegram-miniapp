@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Send, CheckCircle2, ShieldCheck, Clock, Phone, Upload, Image as ImageIcon, Check } from 'lucide-react';
+import { X, Send, CheckCircle2, ShieldCheck, Clock, Phone, Upload, Image as ImageIcon, Check, MessageSquare } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 function InstagramIcon({ className = "w-3 h-3 text-pink-600" }) {
@@ -27,6 +27,8 @@ export function CustomOrderModal({ isOpen, onClose, user, onHaptic, showAlert })
   const [screenshotPreview, setScreenshotPreview] = useState(null);
   const [screenshotName, setScreenshotName] = useState('');
   const [orderSent, setOrderSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionSuccess, setSubmissionSuccess] = useState(false);
 
   if (!isOpen) return null;
 
@@ -71,7 +73,7 @@ export function CustomOrderModal({ isOpen, onClose, user, onHaptic, showAlert })
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name.trim()) {
       showAlert('Kripya apna naam enter karein.');
@@ -86,12 +88,47 @@ export function CustomOrderModal({ isOpen, onClose, user, onHaptic, showAlert })
       return;
     }
 
-    onHaptic('success');
+    setIsSubmitting(true);
+    onHaptic('medium');
+
+    const orderPayload = {
+      orderType: 'Custom Website Development (₹499 Package)',
+      amount: '₹499',
+      name: formData.name,
+      phone: formData.phone,
+      instagram: formData.instagram,
+      telegram: formData.contact,
+      websiteType: formData.websiteType,
+      domain: formData.preferredDomain,
+      description: formData.description,
+      referenceUrl: formData.referenceUrl,
+      screenshot: screenshotPreview,
+      telegramUser: window.Telegram?.WebApp?.initDataUnsafe?.user || user || null,
+    };
+
+    let serverSuccess = false;
+    try {
+      const res = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderPayload),
+      });
+      const resJson = await res.json();
+      if (resJson.success) {
+        serverSuccess = true;
+      }
+    } catch (err) {
+      console.warn('API /api/order error:', err);
+    }
+
+    setIsSubmitting(false);
     setOrderSent(true);
+    setSubmissionSuccess(serverSuccess);
+    onHaptic('success');
 
     try {
       confetti({
-        particleCount: 80,
+        particleCount: 90,
         spread: 60,
         origin: { y: 0.6 },
       });
@@ -121,8 +158,11 @@ Sent via Tools4Genz Mini App`;
       console.warn(err);
     }
 
-    const telegramUrl = `https://t.me/alokmodanval?text=${encodeURIComponent(orderText)}`;
-    openTelegramDirect(telegramUrl);
+    // Only fallback open if server delivery failed or not yet configured
+    if (!serverSuccess) {
+      const telegramUrl = `https://t.me/alokmodanval?text=${encodeURIComponent(orderText)}`;
+      openTelegramDirect(telegramUrl);
+    }
   };
 
   const directTelegramLink = `https://t.me/alokmodanval?text=${encodeURIComponent(
@@ -309,28 +349,71 @@ Sent via Tools4Genz Mini App`;
             )}
           </div>
 
-          <div className="space-y-2 pt-1">
-            <button
-              type="submit"
-              className="w-full py-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs shadow-lg shadow-blue-500/20 flex items-center justify-center space-x-2 active:scale-98 transition-all cursor-pointer"
-            >
-              <Send className="w-3.5 h-3.5" />
-              <span>Submit Order via Telegram (₹499)</span>
-            </button>
-
-            {orderSent && (
-              <div className="p-2 rounded-xl bg-blue-50 border border-blue-200 text-center">
+          {/* Submit / Success Section */}
+          {submissionSuccess ? (
+            <div className="p-4 rounded-2xl bg-gradient-to-b from-blue-50 to-indigo-50/50 border border-blue-200 text-center space-y-2.5 animate-fadeIn">
+              <div className="w-12 h-12 mx-auto rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/30">
+                <CheckCircle2 className="w-6 h-6" />
+              </div>
+              <h4 className="text-sm font-bold text-slate-900">
+                Custom Website Order Received!
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Aapka project brief aur requirements direct hamare Telegram par deliver ho gaye hain. Hamari team jald hi aapse WhatsApp ya Telegram par discuss karegi!
+              </p>
+              <div className="pt-1 flex flex-col gap-2">
                 <a
                   href={directTelegramLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs font-bold text-blue-700 hover:underline"
+                  className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-bold shadow-md shadow-blue-500/20 flex items-center justify-center gap-1.5 transition-all"
                 >
-                  👉 Click here if Telegram didn't open automatically
+                  <MessageSquare className="w-4 h-4" />
+                  <span>Chat with @alokmodanval (Optional)</span>
                 </a>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="w-full py-2 px-3 rounded-xl bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-200 transition-colors"
+                >
+                  Close Window
+                </button>
               </div>
-            )}
-          </div>
+            </div>
+          ) : (
+            <div className="space-y-2 pt-1">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full py-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs shadow-lg shadow-blue-500/20 flex items-center justify-center space-x-2 active:scale-98 transition-all cursor-pointer disabled:opacity-75"
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Delivering to Telegram...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-3.5 h-3.5" />
+                    <span>Submit Order via Telegram (₹499)</span>
+                  </>
+                )}
+              </button>
+
+              {orderSent && !submissionSuccess && (
+                <div className="p-2 rounded-xl bg-blue-50 border border-blue-200 text-center">
+                  <a
+                    href={directTelegramLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-bold text-blue-700 hover:underline"
+                  >
+                    👉 Click here if Telegram didn't open automatically
+                  </a>
+                </div>
+              )}
+            </div>
+          )}
         </form>
       </div>
     </div>
